@@ -15,8 +15,13 @@ public class DatabaseContext : DbContext {
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
         DotEnv.Load();
         if (!optionsBuilder.IsConfigured) {
-            optionsBuilder.UseSqlite($"Data Source={Environment.GetEnvironmentVariable("SQLITE_DB_PATH")}")
-                          .UseSnakeCaseNamingConvention();
+            if (String.IsNullOrEmpty(Environment.GetEnvironmentVariable("SQLITE_DB_PATH"))) {
+                optionsBuilder.UseSqlite("DataSource=db/the-verse.sqlite3")
+                              .UseSnakeCaseNamingConvention();
+            } else {
+                optionsBuilder.UseSqlite($"Data Source={Environment.GetEnvironmentVariable("SQLITE_DB_PATH")}")
+                              .UseSnakeCaseNamingConvention();
+            }
         }
     }
 }

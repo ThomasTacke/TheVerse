@@ -14,16 +14,20 @@ builder.Services.AddSwaggerGen(c => {
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment()) {
-    app.UseSwagger(c => {
-        c.RouteTemplate = "qing-long/api/{documentName}/swagger/swagger.json";
-    });
-    app.UseSwaggerUI(c => {
-        c.SwaggerEndpoint("swagger/swagger.json", "QingLong v1");
-        c.RoutePrefix = "qing-long/api/v1";
-    });
+using (var context = new DatabaseContext()) {
+    context.Database.EnsureCreated();
 }
+
+// Configure the HTTP request pipeline.
+// if (app.Environment.IsDevelopment()) {
+app.UseSwagger(c => {
+    c.RouteTemplate = "qing-long/api/{documentName}/swagger/swagger.json";
+});
+app.UseSwaggerUI(c => {
+    c.SwaggerEndpoint("swagger/swagger.json", "QingLong v1");
+    c.RoutePrefix = "qing-long/api/v1";
+});
+// }
 
 app.UseAuthorization();
 app.MapControllers();
