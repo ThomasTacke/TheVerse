@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  mosquitto:
+    image: eclipse-mosquitto:latest
+    hostname: mosquitto
+    container_name: bai-hu-mosquitto
+    volumes:
+      - ./mosquitto.conf:/mosquitto/config/mosquitto.conf
+    ports:
+      - 1883:1883
+      - 9001:9001
+
+  dev:
+    image: registry.gitlab.com/smart-home-the-verse/bai-hu:dev
+    container_name: bai-hu-dev
+    depends_on:
+      - mosquitto
+    build: 
+      context: .
+      target: dev
+    volumes: 
+      - .:/usr/src/app
+    environment: 
+      - NODE_ENV=dev
+      - MQTT_BROKER=mosquitto
+      - ADDRESS=0.0.0.0
+    working_dir: /usr/src/app
+    ports:
+      - 3000:3000
+    stdin_open: true
+    tty: true
+    command: [ "npm", "run", "dev" ]
+    # command: [ "/bin/bash" ]
+
+  web:
+    image: registry.gitlab.com/smart-home-the-verse/bai-hu:latest
+    container_name: bai-hu
+    environment: 
+      - MQTT_BROKER=192.168.42.45
+      - ADDRESS=0.0.0.0
+    build:
+      context: .
+      target: prod
+    ports:
+      - 80:3000
+    restart: on-failure
