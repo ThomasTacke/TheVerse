@@ -15,6 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build Qing Long Docker image
-      run: docker build . --file src/QingLong/Dockerfile --tag qing-long:$(date +%s)
+      working-directory: src/QingLong
+      run: docker build . --file Dockerfile --tag qing-long:$(date +%s)
 #     - name: Build Bai Hu Docker image
 #       run: docker build . --file src/BaiHu/Dockerfile --tag qing-long:$(date +%s)
