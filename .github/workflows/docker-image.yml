@@ -1,0 +1,20 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build Qing Long Docker image
+      run: docker build . --file src/QingLong/Dockerfile --tag qing-long:$(date +%s)
+#     - name: Build Bai Hu Docker image
+#       run: docker build . --file src/BaiHu/Dockerfile --tag qing-long:$(date +%s)
