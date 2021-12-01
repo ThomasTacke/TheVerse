@@ -49,7 +49,7 @@ public class LightController : ControllerBase {
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Put() {
         if (_mqttClient.IsConnected)
-            await _mqttClient.PublishAsync(new MqttApplicationMessageBuilder().WithTopic("MyTopic")
+            await _mqttClient.PublishAsync(new MqttApplicationMessageBuilder().WithTopic("the-verse/test")
                                                                         .WithPayload("Hello World")
                                                                         .WithExactlyOnceQoS()
                                                                         .WithRetainFlag()
