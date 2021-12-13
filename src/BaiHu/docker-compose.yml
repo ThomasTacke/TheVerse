@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  mqtt-broker:
+    image: emqx/emqx:latest
+    container_name: BaiHu-mqtt-broker
+    ports:
+      - 1883:1883
+      - 8083:8083
+      - 8883:8883
+      - 8084:8084
+      - 18083:18083
+
+  app:
+    image: rootthekid/bai-hu:latest
+    container_name: BaiHu
+    environment: 
+      - MQTT_BROKER=BaiHu-mqtt-broker
+    build:
+      context: .
+    ports:
+      - 8080:80
+    restart: on-failure
+    depends_on:
+      - mqtt-broker
