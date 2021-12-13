@@ -1,6 +1,6 @@
 # BaiHu
 
-BaiHi -- White Tiger -- is a HTTP(S) to MQTT wrapper. For example it is used with Sleep as Android to switch on/off lights when the alarm rings or sleep tracking is activated.
+BaiHi -- White Tiger -- is the interface between the MQTT-Topics and the database. Data is uploaded via QingLong to the database.
 
 ## Getting Started
 
@@ -29,5 +29,5 @@ docker push rootthekid/bai-hu:latest
 ### Run
 
 ```PowerShell
-docker run --rm -p 8802:80 --name qing-long rootthekid/bai-hu:latest
+docker run --rm -p 8802:80 --name BaiHu rootthekid/bai-hu:latest
 ```

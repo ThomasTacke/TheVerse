@@ -9,4 +9,4 @@ FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
 COPY --from=build-env /build/out .
 RUN mkdir db
-ENTRYPOINT [ "dotnet", "QingLong.dll" ]
+ENTRYPOINT [ "dotnet", "BaiHu.dll" ]
